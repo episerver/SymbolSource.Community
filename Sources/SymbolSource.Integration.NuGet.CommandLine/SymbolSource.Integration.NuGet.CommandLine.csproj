@@ -53,6 +53,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="chocolateyinstall.ps1" />
     <None Include="chocolateyuninstall.ps1" />
   </ItemGroup>
