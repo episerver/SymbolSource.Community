@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Web;
+using System.Web.Hosting;
 
 namespace SymbolSource.Server.Basic
 {
@@ -7,19 +9,41 @@ namespace SymbolSource.Server.Basic
     {
         public string DataPath
         {
-            get { return HttpContext.Current.Server.MapPath("~/Data"); }
+            get
+            {
+                var path = ConfigurationManager.AppSettings["DataPath"];
+
+                if (String.IsNullOrEmpty(path))
+                {
+                    // Default path
+                    return HostingEnvironment.MapPath("~/Data");
+                }
+
+                return path.StartsWith("~/") ? HostingEnvironment.MapPath(path) : path;
+            }
         }
 
         public string IndexPath
         {
-            get { return HttpContext.Current.Server.MapPath("~/Index"); }
+            get
+            {
+                var path = ConfigurationManager.AppSettings["indexPath"];
+
+                if (String.IsNullOrEmpty(path))
+                {
+                    // Default path
+                    return HostingEnvironment.MapPath("~/Index");
+                }
+
+                return path.StartsWith("~/") ? HostingEnvironment.MapPath(path) : path;
+            }
         }
 
         public string RemotePath
         {
             get
             {
-                return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath.TrimEnd('/') + "/Data";
+                return HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HostingEnvironment.ApplicationVirtualPath.TrimEnd('/') + "/Data";
             }
         }
     }
