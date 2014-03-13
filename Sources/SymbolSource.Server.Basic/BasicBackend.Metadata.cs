@@ -68,8 +68,7 @@ namespace SymbolSource.Server.Basic
 
             return new[]
                        {
-                           GetPackageName("NuGet", version.Project, version.Name),
-                           GetPackageName("OpenWrap", version.Project, version.Name)
+                           GetPackageName("NuGet", version.Project, version.Name)
                        };
         }
 
