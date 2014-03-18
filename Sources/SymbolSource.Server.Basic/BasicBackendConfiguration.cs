@@ -39,6 +39,22 @@ namespace SymbolSource.Server.Basic
             }
         }
 
+        public string ApiKey
+        {
+            get
+            {
+                var key = ConfigurationManager.AppSettings["ApiKey"];
+
+                if (String.IsNullOrEmpty(key))
+                {
+                    // Default key
+                    return "123";
+                }
+
+                return key;
+            }
+        }
+
         public string RemotePath
         {
             get

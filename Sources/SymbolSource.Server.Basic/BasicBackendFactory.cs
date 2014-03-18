@@ -29,6 +29,11 @@ namespace SymbolSource.Server.Basic
 
         public User Validate(Caller caller)
         {
+            if (caller.KeyValue != configuration.ApiKey)
+            {
+                return null;
+            }
+
             return new User
                        {
                            Name = caller.Name,
@@ -48,12 +53,17 @@ namespace SymbolSource.Server.Basic
 
         public Caller GetUserByKey(string company, string type, string value)
         {
+            if (value != configuration.ApiKey)
+            {
+                throw new UnauthorizedAccessException("Not a valid API key");
+            }
+
             return new Caller
                        {
                            Company = "Basic",
                            Name = "Basic",
-                           KeyType = "Basic",
-                           KeyValue = "Basic",
+                           KeyType = type,
+                           KeyValue = value,
                        };
         }
     }

@@ -5,5 +5,6 @@
         string DataPath { get; }
         string IndexPath { get; }
         string RemotePath { get; }
+        string ApiKey { get; }
     }
 }
