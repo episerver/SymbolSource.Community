@@ -40,3 +40,11 @@ This could one day integrate symbol package validation into nuget.exe, but is on
 ## SymbolSource.Processing.Uninternalizer
 
 This is a fun C# source code converter that uses NRefactory to change all protected and internal members into public ones. We use it to publish SymbolSource.Microsoft.Cci.Metadata.
+
+## Troubleshooting
+
+* Pushing symbol packages to the server fails with error "Arithmetic operation resulted in an overflow"
+    - Enable 32 bit applications for the IIS application pool. The Delimon.Win32.IO assembly used by SymbolSource to handle long file names is not x64 compatible.
+
+* Pushing symbol packages fails intermittently with "Internal server error". Tracing the applicaton reveals an underlying error "Not enough storage is available to complete this operation. (0x8007000e)".
+    - Set the application pool to recycle often (after only a few requests). Something in SymbolSource is leaking resources, or at least not recovering resources quickly enough to serve subsequent requests. 
